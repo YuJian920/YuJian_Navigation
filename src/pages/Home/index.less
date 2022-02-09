@@ -1,0 +1,50 @@
+.flexEle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Home {
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../../assets/background.jpg");
+  background-size: cover;
+
+  .searchBox {
+    display: flex;
+    align-items: center;
+    height: 70px;
+    width: 730px;
+    border-radius: 100px;
+    background-color: #ffffff;
+
+    .searchBox__iconBox {
+      width: 10%;
+      height: 100%;
+
+      &-icon {
+        width: 35px;
+        height: 35px;
+      }
+    }
+
+    .searchBox__inputBox {
+      width: 80%;
+      height: 100%;
+
+      &-input {
+        width: 100%;
+        font-size: 22px;
+        border: none;
+      }
+
+      &-input:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .searchPopup{
+    .searchBox__searchPopup{}
+  }
+}
