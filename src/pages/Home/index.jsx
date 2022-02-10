@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { getImageUrl } from "../../utils";
+import { CSSTransition } from "react-transition-group";
 import "./index.less";
 
 const TypeDict = [
@@ -18,6 +19,7 @@ const TypeDict = [
 const Home = () => {
   const [searchWord, setSearchWord] = useState("");
   const [searchType, setSearchType] = useState(0);
+  const [animeStatus, setAnimeStatus] = useState(false);
 
   /** 搜索事件 */
   const _searchEvent = (e) => {
@@ -38,6 +40,7 @@ const Home = () => {
             <img
               className="searchBox__iconBox-icon"
               src={getImageUrl(TypeDict[searchType].imgPath)}
+              onClick={() => setAnimeStatus(!animeStatus)}
             />
           </div>
           <div className="searchBox__inputBox flexEle">
@@ -49,33 +52,32 @@ const Home = () => {
               onChange={(e) => setSearchWord(e.target.value)}
             />
           </div>
-          <div
-            className="searchBox__searchPopup fadeIn animated"
-            style={{ display: "none" }}
+          <CSSTransition
+            in={animeStatus}
+            classNames="searchPopupAn"
+            timeout={200}
+            mountOnEnter
+            unmountOnExit
           >
-            <div
-              className="searchBox__searchPopup-item flexEle"
-              onClick={() => setSearchType(0)}
-            >
-              <img
-                className="itemImg"
-                src={getImageUrl("google.png")}
-                alt="Google.com"
-              />
-              <span className="itemTitle">Google</span>
+            <div className="searchBox__searchPopup">
+              {TypeDict.map((mapItem, index) => {
+                return (
+                  <div
+                    className="searchBox__searchPopup-item flexEle"
+                    onClick={() => setSearchType(index)}
+                    key={mapItem.type}
+                  >
+                    <img
+                      className="itemImg"
+                      src={getImageUrl(mapItem.imgPath)}
+                      alt={mapItem.type}
+                    />
+                    <span className="itemTitle">{mapItem.type}</span>
+                  </div>
+                );
+              })}
             </div>
-            <div
-              className="searchBox__searchPopup-item flexEle"
-              onClick={() => setSearchType(1)}
-            >
-              <img
-                className="itemImg"
-                src={getImageUrl("baidu.png")}
-                alt="Baidu.com"
-              />
-              <span className="itemTitle">百度</span>
-            </div>
-          </div>
+          </CSSTransition>
         </div>
       </div>
     </>
