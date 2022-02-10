@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { getImageUrl } from "../../utils";
 import { CSSTransition } from "react-transition-group";
 import "./index.less";
@@ -21,6 +21,9 @@ const Home = () => {
   const [searchType, setSearchType] = useState(0);
   const [animeStatus, setAnimeStatus] = useState(false);
 
+  const popupRef = useRef(null);
+  const modalRef = useRef(null);
+
   /** 搜索事件 */
   const _searchEvent = (e) => {
     if (e.keyCode !== 13) return;
@@ -28,19 +31,17 @@ const Home = () => {
     window.location.href = `${serchURL}${encodeURIComponent(searchWord)}`;
   };
 
-  const _onSearhChange = (value) => {
-    TypeDict[value].type;
-  };
-
   return (
     <>
       <div className="Home flexEle">
         <div className="searchBox">
-          <div className="searchBox__iconBox flexEle">
+          <div
+            className="searchBox__iconBox flexEle"
+            onClick={() => setAnimeStatus(!animeStatus)}
+          >
             <img
               className="searchBox__iconBox-icon"
               src={getImageUrl(TypeDict[searchType].imgPath)}
-              onClick={() => setAnimeStatus(!animeStatus)}
             />
           </div>
           <div className="searchBox__inputBox flexEle">
@@ -53,18 +54,22 @@ const Home = () => {
             />
           </div>
           <CSSTransition
+            nodeRef={popupRef}
             in={animeStatus}
             classNames="searchPopupAn"
             timeout={200}
             mountOnEnter
             unmountOnExit
           >
-            <div className="searchBox__searchPopup">
+            <div className="searchBox__searchPopup" ref={popupRef}>
               {TypeDict.map((mapItem, index) => {
                 return (
                   <div
                     className="searchBox__searchPopup-item flexEle"
-                    onClick={() => setSearchType(index)}
+                    onClick={() => {
+                      setSearchType(index);
+                      setAnimeStatus(false);
+                    }}
                     key={mapItem.type}
                   >
                     <img
@@ -79,6 +84,20 @@ const Home = () => {
             </div>
           </CSSTransition>
         </div>
+        <CSSTransition
+          nodeRef={modalRef}
+          in={animeStatus}
+          classNames="ModalAn"
+          timeout={200}
+          mountOnEnter
+          unmountOnExit
+        >
+          <div
+            className="Modal"
+            onClick={() => setAnimeStatus(false)}
+            ref={modalRef}
+          />
+        </CSSTransition>
       </div>
     </>
   );
