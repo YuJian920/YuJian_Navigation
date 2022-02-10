@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import ItemBox from "../../components/ItemBox";
 import { getImageUrl } from "../../utils";
 import { CSSTransition } from "react-transition-group";
 import "./index.less";
@@ -84,6 +85,7 @@ const Home = () => {
             </div>
           </CSSTransition>
         </div>
+        <ItemBox />
         <CSSTransition
           nodeRef={modalRef}
           in={animeStatus}

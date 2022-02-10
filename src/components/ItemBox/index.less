@@ -1,0 +1,32 @@
+.itemBox {
+  display: grid;
+  grid-template-columns: repeat(6, calc(100% / 6));
+  grid-template-rows: repeat(2, 130px);
+  width: 730px;
+  margin-top: 50px;
+
+  .itemBox__item {
+    flex-direction: column;
+    color: #000000;
+    width: 86px;
+
+    &-icon {
+      width: 69px;
+      height: 69px;
+      border-radius: 100%;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0px 1px 5px #727272;
+    }
+
+    &-icon:hover {
+      animation: 2s ease 0s infinite normal none running blinking;
+      // box-shadow: none;
+    }
+
+    &-name {
+      margin-top: 8px;
+      font-size: 13px;
+    }
+  }
+}
